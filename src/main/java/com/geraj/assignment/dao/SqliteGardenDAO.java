@@ -70,7 +70,7 @@ public class SqliteGardenDAO implements IGardenDAO {
             if (garden.getOwner() != null) {
                 statement.setInt(6, garden.getOwner().getId());
             } else {
-                statement.setNull(6, java.sql.Types.VARCHAR);
+                statement.setNull(6, java.sql.Types.INTEGER);
             }
 
             statement.executeUpdate();
