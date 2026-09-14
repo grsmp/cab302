@@ -93,7 +93,7 @@ public class SqliteAccountDAO implements IAccountDAO {
     @Override
     public Account getAccountByName(String searchName) {
         String query = """
-            SELECT name, email, firstName, lastName, phoneNumber, hash
+            SELECT id, name, email, firstName, lastName, phoneNumber, hash
             FROM accounts
             WHERE name = ?
             """;
@@ -122,7 +122,7 @@ public class SqliteAccountDAO implements IAccountDAO {
     @Override
     public Optional<Account> getAccountById(int accountId) {
         String query = """
-            SELECT name, email, firstName, lastName, phoneNumber, hash
+            SELECT id, name, email, firstName, lastName, phoneNumber, hash
             FROM accounts
             WHERE id = ?
             """;
@@ -150,7 +150,7 @@ public class SqliteAccountDAO implements IAccountDAO {
     @Override
     public Optional<Account> getAccountByEmail(String email) {
         String query = """
-            SELECT name, email, firstName, lastName, phoneNumber, hash
+            SELECT id, name, email, firstName, lastName, phoneNumber, hash
             FROM accounts
             WHERE email = ?
             """;
@@ -195,8 +195,15 @@ public class SqliteAccountDAO implements IAccountDAO {
         }
     }
 
+    /**
+     * Converts the current database row into an account, preserving its identity.
+     *
+     * @param resultSet the query result positioned at the account row
+     * @return the account containing its stored ID and account information
+     * @throws SQLException if a required column cannot be read
+     */
     private Account mapAccount(ResultSet resultSet) throws SQLException {
-        return new Account(
+        Account account = new Account(
                 resultSet.getString("name"),
                 resultSet.getString("email"),
                 resultSet.getString("firstName"),
@@ -204,5 +211,9 @@ public class SqliteAccountDAO implements IAccountDAO {
                 resultSet.getString("phoneNumber"),
                 resultSet.getString("hash")
         );
+
+        // Restore the existing database identity without changing the constructor.
+        account.setId(resultSet.getInt("id"));
+        return account;
     }
 }
