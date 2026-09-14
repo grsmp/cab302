@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class AccountTest {
     private static final String USERNAME = "harresh";
@@ -82,6 +83,54 @@ class AccountTest {
         );
 
         assertEquals("Account phone number cannot be null", exception.getMessage());
+    }
+
+    /**
+     * Verifies that constructing an account does not assign a database identity.
+     * The identifier remains null until the account is persisted or loaded.
+     */
+    @Test
+    void newlyConstructedAccountShouldHaveNoId() {
+        Account account = createAccount();
+
+        assertNull(account.getId());
+    }
+
+    /**
+     * Verifies that assigning a database identifier preserves the account's
+     * existing credentials and personal information.
+     */
+    @Test
+    void assigningIdShouldPreserveAccountAndProfileInformation() {
+        Account account = createAccount();
+
+        // Use a fixed identifier to test the model independently of SQLite.
+        account.setId(42);
+
+        assertAll(
+                () -> assertEquals(Integer.valueOf(42), account.getId()),
+                () -> assertEquals(USERNAME, account.getName()),
+                () -> assertEquals(EMAIL, account.getEmail()),
+                () -> assertEquals(FIRST_NAME, account.getFirstName()),
+                () -> assertEquals(LAST_NAME, account.getLastName()),
+                () -> assertEquals(PHONE_NUMBER, account.getPhoneNumber()),
+                () -> assertEquals(HASH, account.getHash())
+        );
+    }
+
+    /**
+     * Verifies that the identifier accepts null, representing an account
+     * without an assigned database identity.
+     */
+    @Test
+    void accountIdShouldAllowNull() {
+        Account account = createAccount();
+        account.setId(42);
+
+        // Check that null is accepted even after an identifier was assigned.
+        account.setId(null);
+
+        assertNull(account.getId());
     }
 
     private Account createAccount() {
