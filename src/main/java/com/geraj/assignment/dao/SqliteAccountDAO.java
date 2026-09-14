@@ -79,6 +79,13 @@ public class SqliteAccountDAO implements IAccountDAO {
             statement.setString(5, account.getPhoneNumber());
             statement.setString(6, account.getHash());
             statement.executeUpdate();
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    account.setId(generatedKeys.getInt(1));
+                }
+            }
+
         } catch (SQLException exception) {
             throw new IllegalStateException("Could not create the account", exception);
         }
@@ -93,7 +100,7 @@ public class SqliteAccountDAO implements IAccountDAO {
     @Override
     public Account getAccountByName(String searchName) {
         String query = """
-            SELECT name, email, firstName, lastName, phoneNumber, hash
+            SELECT id, name, email, firstName, lastName, phoneNumber, hash
             FROM accounts
             WHERE name = ?
             """;
@@ -122,7 +129,7 @@ public class SqliteAccountDAO implements IAccountDAO {
     @Override
     public Optional<Account> getAccountById(int accountId) {
         String query = """
-            SELECT name, email, firstName, lastName, phoneNumber, hash
+            SELECT id, name, email, firstName, lastName, phoneNumber, hash
             FROM accounts
             WHERE id = ?
             """;
@@ -150,7 +157,7 @@ public class SqliteAccountDAO implements IAccountDAO {
     @Override
     public Optional<Account> getAccountByEmail(String email) {
         String query = """
-            SELECT name, email, firstName, lastName, phoneNumber, hash
+            SELECT id, name, email, firstName, lastName, phoneNumber, hash
             FROM accounts
             WHERE email = ?
             """;
@@ -196,7 +203,7 @@ public class SqliteAccountDAO implements IAccountDAO {
     }
 
     private Account mapAccount(ResultSet resultSet) throws SQLException {
-        return new Account(
+        Account account = new Account(
                 resultSet.getString("name"),
                 resultSet.getString("email"),
                 resultSet.getString("firstName"),
@@ -204,5 +211,7 @@ public class SqliteAccountDAO implements IAccountDAO {
                 resultSet.getString("phoneNumber"),
                 resultSet.getString("hash")
         );
+        account.setId(resultSet.getInt("id"));
+        return account;
     }
 }

@@ -7,6 +7,7 @@ import java.util.Objects;
  */
 public class Account {
 
+    private Integer id;
     private String name;
     private String email;
     private String firstName;
@@ -60,6 +61,22 @@ public class Account {
                 hash,
                 "Account password hash cannot be null"
         );
+    }
+
+    /**
+     * Gets the id of the account.
+     * @return the id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * Sets the id of the account.
+     * @param id the new id of the account
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
