@@ -13,10 +13,19 @@ public class GardenInfoContoller {
     @FXML private TextArea gardenDescription;
 
 
+    private Garden current_garden;
+
     public void setInfo(Garden garden) {
+        current_garden = garden;
         GardenName.setText(garden.getName());
         GardenLocation.setText(garden.getLocation());
         gardenDescription.setText(garden.getDescription());
+    }
+
+    @FXML
+    private void onJoin(ActionEvent actionEvent) {
+        GardenEditorController controller = SceneSwitcher.switchScene(actionEvent, "garden-editor-view.fxml");
+        controller.setGarden(current_garden);
     }
 
     @FXML

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.geraj.assignment.controller.CreateGardenPlotController">
+
+<!--    <top>-->
+<!--        <fx:include source="nav-bar.fxml"/>-->
+<!--    </top>-->
+
+    <center>
+        <VBox alignment="CENTER"
+              spacing="20.0">
+
+            <padding>
+                <Insets top="30.0"
+                        right="30.0"
+                        bottom="30.0"
+                        left="30.0"/>
+            </padding>
+
+            <Label text="Enter Garden Plot Details"/>
+
+            <GridPane hgap="15" vgap="10" alignment="CENTER">
+                <Label text="Width:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                <TextField fx:id="widthField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                <Label text="Length:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                <TextField fx:id="lengthField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                <Label text="pH:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                <TextField fx:id="phField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                <Label text="Light:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                <TextField fx:id="lightField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                <Label text="Nutriments:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                <TextField fx:id="nutrimentsField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+                <Label text="Salinity:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                <TextField fx:id="salinityField" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+                <Label text="Texture:" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+                <TextField fx:id="textureField" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+
+                <Label text="Depth:" GridPane.columnIndex="0" GridPane.rowIndex="7"/>
+                <TextField fx:id="depthField" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+
+                <Label text="Soil Humidity:" GridPane.columnIndex="0" GridPane.rowIndex="8"/>
+                <TextField fx:id="soilHumidityField" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+
+            </GridPane>
+
+            <Label fx:id="messageLabel"
+                   textFill="RED"
+                   wrapText="true"/>
+
+            <HBox spacing="15.0" alignment="CENTER">
+                <Button fx:id="saveButton" text="Create Plot" onAction="#onCreate"/>
+                <Button text="Cancel" onAction="#onCancel"/>
+            </HBox>
+
+        </VBox>
+    </center>
+</BorderPane>

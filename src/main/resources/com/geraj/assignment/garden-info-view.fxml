@@ -73,6 +73,7 @@
             <HBox alignment="CENTER">
                 <Button fx:id="joinGardenButton"
                         text="Join Garden"
+                        onAction="#onJoin"
                 />
             </HBox>
         </VBox>
