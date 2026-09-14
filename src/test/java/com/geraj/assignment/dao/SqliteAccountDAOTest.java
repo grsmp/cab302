@@ -150,6 +150,49 @@ class SqliteAccountDAOTest {
         );
     }
 
+    /**
+     * Verifies that looking up an account by username preserves its database ID.
+     * Two accounts ensure the lookup returns the requested account's identity.
+     */
+    @Test
+    void getAccountByNameShouldPreserveStoredIdentifier() {
+        accountDAO.createAccount(createAccount(
+                "first", "first@example.com", "First", "User",
+                "", "first-hash"
+        ));
+        accountDAO.createAccount(createAccount(
+                "second", "second@example.com", "Second", "User",
+                "", "second-hash"
+        ));
+
+        Account result = accountDAO.getAccountByName("second");
+
+        // Each test starts with an empty database, so the second row has ID 2.
+        assertEquals(Integer.valueOf(2), result.getId());
+    }
+
+    /**
+     * Verifies that looking up an account by email preserves its database ID.
+     * The requested account must retain its own identity rather than another row's.
+     */
+    @Test
+    void getAccountByEmailShouldPreserveStoredIdentifier() {
+        accountDAO.createAccount(createAccount(
+                "first", "first@example.com", "First", "User",
+                "", "first-hash"
+        ));
+        accountDAO.createAccount(createAccount(
+                "second", "second@example.com", "Second", "User",
+                "", "second-hash"
+        ));
+
+        Account result = accountDAO.getAccountByEmail("second@example.com")
+                .orElseThrow();
+
+        // The fresh database assigns ID 2 to the second inserted account.
+        assertEquals(Integer.valueOf(2), result.getId());
+    }
+
     private Account createAccount(
             String name,
             String email,
