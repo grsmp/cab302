@@ -257,6 +257,28 @@ public class ProfileController {
     }
 
     /**
+     * Ends the current session and performs navigation when leaving is approved.
+     * If the user cancels the confirmation, the session and current view remain.
+     *
+     * @param navigateAfterLogout the navigation action to perform after logout
+     * @throws NullPointerException if the navigation action is null
+     */
+    public void logout(Runnable navigateAfterLogout) {
+        Objects.requireNonNull(
+                navigateAfterLogout,
+                "Logout navigation cannot be null"
+        );
+
+        if (!confirmNavigationIfDirty()) {
+            return;
+        }
+
+        // Clear the session before the destination initialises its navigation.
+        AccountSession.logout();
+        navigateAfterLogout.run();
+    }
+
+    /**
      * Requests confirmation before navigating away from unsaved changes.
      *
      * @return true when navigation may continue
