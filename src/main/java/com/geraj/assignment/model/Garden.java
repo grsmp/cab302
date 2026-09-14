@@ -167,4 +167,19 @@ public class Garden {
     public String toString() {
         return getName() + " - " + getLocation();
     }
+
+    /**
+     * Gets a description of the garden as a string.
+     * @return the description
+     */
+    public String getDescription() {
+        return String.format("Garden: %s located in %s.\nConditions:\n\t- Temp: %s\n\t- Precip: %s\n\t- Humidity: %s\n\t- Owner: %s\n\t- Total Plots: %d",
+                name,
+                location,
+                temperature != null ? temperature + "°" : "N/A",
+                precipitation != null ? precipitation + "mm" : "N/A",
+                atmosphericHumidity != null ? atmosphericHumidity + "%" : "N/A",
+                owner != null ? owner.getName() : "Unknown",
+                gardenPlots != null ? gardenPlots.size() : 0);
+    }
 }
