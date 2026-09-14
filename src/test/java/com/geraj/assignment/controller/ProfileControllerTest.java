@@ -20,7 +20,7 @@ public class ProfileControllerTest {
     private Account account;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         AccountSession.logout();
         account = new Account(
                 "harresh", "harresh@example.com", "Harresh",
@@ -30,7 +30,7 @@ public class ProfileControllerTest {
     }
 
     @AfterEach
-    void tearDown() {
+    public void tearDown() {
         // Prevent the singleton session from leaking into another test.
         AccountSession.logout();
     }
@@ -40,7 +40,7 @@ public class ProfileControllerTest {
      * session and leave the user on the profile.
      */
     @Test
-    void cancelledLogoutShouldPreserveSessionAndPreventNavigation() {
+    public void cancelledLogoutShouldPreserveSessionAndPreventNavigation() {
         ProfileController controller = createController(false);
         AccountSession originalSession = AccountSession.getInstance();
         AtomicBoolean navigated = new AtomicBoolean(false);
@@ -61,7 +61,7 @@ public class ProfileControllerTest {
      * so its navigation controls initialise in the signed-out state.
      */
     @Test
-    void approvedLogoutShouldClearSessionBeforeNavigation() {
+    public void approvedLogoutShouldClearSessionBeforeNavigation() {
         ProfileController controller = createController(true);
         AtomicBoolean navigated = new AtomicBoolean(false);
 
