@@ -1,6 +1,8 @@
 package com.geraj.assignment.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -13,7 +15,7 @@ public class Garden {
     private double precipitation;
     private int atmosphericHumidity;
     private Account owner;
-    private final ArrayList<GardenPlot> gardenPlots;
+    private final List<GardenPlot> gardenPlots;
 
     /**
      * Constructs a new garden with the specified name, location, temperature, precipitation, atmospheric humidity and owner.
@@ -32,7 +34,7 @@ public class Garden {
                   Account owner) {
         this.name = Objects.requireNonNull(name, "Garden name cannot be null");
         this.location = Objects.requireNonNull(location, "Garden location cannot be null");
-        this.temperature = temperature;;
+        this.temperature = temperature;
         this.precipitation = precipitation;
         this.atmosphericHumidity = atmosphericHumidity;
         this.owner = Objects.requireNonNull(owner, "Garden owner cannot be null");
@@ -75,7 +77,7 @@ public class Garden {
      * Gets the temperature of the garden.
      * @return the temperature
      */
-    public Double getTemperature() {
+    public double getTemperature() {
         return temperature;
     }
 
@@ -91,7 +93,7 @@ public class Garden {
      * Gets the precipitation of the garden.
      * @return the precipitation
      */
-    public Double getPrecipitation() {
+    public double getPrecipitation() {
         return precipitation;
     }
 
@@ -107,7 +109,7 @@ public class Garden {
      * Gets the atmospheric humidity of the garden.
      * @return the atmospheric humidity
      */
-    public Integer getAtmosphericHumidity() {
+    public int getAtmosphericHumidity() {
         return atmosphericHumidity;
     }
 
@@ -139,8 +141,8 @@ public class Garden {
      * Gets the list of garden plots of the garden.
      * @return the list of garden plots
      */
-    public ArrayList<GardenPlot> getGardenPlots() {
-        return gardenPlots;
+    public List<GardenPlot> getGardenPlots() {
+        return Collections.unmodifiableList(gardenPlots);
     }
 
     /**
@@ -148,7 +150,7 @@ public class Garden {
      * @param gardenPlot the garden plot to add
      */
     public void addGardenPlot(GardenPlot gardenPlot) {
-        this.gardenPlots.add(gardenPlot);
+        this.gardenPlots.add(Objects.requireNonNull(gardenPlot, "Garden plot cannot be null"));
     }
 
     /**
