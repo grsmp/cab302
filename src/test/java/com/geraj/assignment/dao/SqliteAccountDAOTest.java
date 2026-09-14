@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class SqliteAccountDAOTest {
     private Connection connection;
@@ -191,6 +192,36 @@ class SqliteAccountDAOTest {
 
         // The fresh database assigns ID 2 to the second inserted account.
         assertEquals(Integer.valueOf(2), result.getId());
+    }
+
+    /**
+     * Verifies that creating an account assigns its generated database ID
+     * to the original object and that the ID identifies the stored account.
+     */
+    @Test
+    void createAccountShouldAssignGeneratedIdentifierToOriginalAccount() {
+        Account account = createAccount(
+                "harresh", "harresh@example.com", "Harresh", "Patel",
+                "0412345678", "stored-hash"
+        );
+
+        accountDAO.createAccount(account);
+
+        // The caller needs the persisted identity without reloading the account.
+        assertNotNull(
+                account.getId(),
+                "Creating an account should assign its generated database ID."
+        );
+
+        // Check that the assigned identifier refers to the correct stored row.
+        Account storedAccount = accountDAO.getAccountById(account.getId())
+                .orElseThrow();
+
+        assertAll(
+                () -> assertEquals(account.getId(), storedAccount.getId()),
+                () -> assertEquals(account.getName(), storedAccount.getName()),
+                () -> assertEquals(account.getEmail(), storedAccount.getEmail())
+        );
     }
 
     private Account createAccount(
