@@ -26,8 +26,8 @@ public class SqliteGardenDAO implements IGardenDAO {
                 temperature REAL,
                 precipitation REAL,
                 atmosphericHumidity REAL,
-                owner_name TEXT,
-                FOREIGN KEY (owner_name) REFERENCES accounts(name)
+                owner_id INTEGER,
+                FOREIGN KEY (owner_id) REFERENCES accounts(id)
             );
             """;
 
@@ -41,7 +41,7 @@ public class SqliteGardenDAO implements IGardenDAO {
     @Override
     public void createGarden(Garden garden) {
         String query = """
-            INSERT INTO gardens (name, location, temperature, precipitation, atmosphericHumidity, owner_name)
+            INSERT INTO gardens (name, location, temperature, precipitation, atmosphericHumidity, owner_id)
             VALUES (?, ?, ?, ?, ?, ?)
             """;
 
@@ -68,7 +68,7 @@ public class SqliteGardenDAO implements IGardenDAO {
             }
 
             if (garden.getOwner() != null) {
-                statement.setString(6, garden.getOwner().getName());
+                statement.setInt(6, garden.getOwner().getId());
             } else {
                 statement.setNull(6, java.sql.Types.VARCHAR);
             }
@@ -126,11 +126,12 @@ public class SqliteGardenDAO implements IGardenDAO {
                     Integer atmosphericHumidity = resultSet.getInt("atmosphericHumidity");
                     if (resultSet.wasNull()) atmosphericHumidity = null;
 
-                    String ownerName = resultSet.getString("owner_name");
+                    int ownerId = resultSet.getInt("owner_id");
                     Account owner = null;
-                    if (ownerName != null) {
+
+                    if (!resultSet.wasNull()) {
                         IAccountDAO accountDAO = new SqliteAccountDAO();
-                        owner = accountDAO.getAccountByName(ownerName);
+                        owner = accountDAO.getAccountById(ownerId).orElse(null);
                     }
 
                     Garden garden = new Garden(name, location, temperature, precipitation, atmosphericHumidity, owner);
