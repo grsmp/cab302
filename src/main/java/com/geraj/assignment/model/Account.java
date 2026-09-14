@@ -7,6 +7,10 @@ import java.util.Objects;
  */
 public class Account {
 
+    /**
+     * The account's database identifier, or null when no identity is assigned.
+     */
+    private Integer id;
     private String name;
     private String email;
     private String firstName;
@@ -60,6 +64,25 @@ public class Account {
                 hash,
                 "Account password hash cannot be null"
         );
+    }
+
+    /**
+     * Returns the account's database identifier.
+     *
+     * @return the database identifier, or null when no identity is assigned
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * Sets the account's database identifier.
+     * Assigning an identifier does not change the account's personal information.
+     *
+     * @param id the database identifier, or null to represent an unassigned identity
+     */
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     /**
