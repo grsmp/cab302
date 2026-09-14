@@ -9,11 +9,11 @@ import java.util.Objects;
 public class Garden {
     private String name;
     private String location;
-    private Double temperature;
-    private Double precipitation;
-    private Integer atmosphericHumidity;
+    private double temperature;
+    private double precipitation;
+    private int atmosphericHumidity;
     private Account owner;
-    private ArrayList<GardenPlot> gardenPlots;
+    private final ArrayList<GardenPlot> gardenPlots;
 
     /**
      * Constructs a new garden with the specified name, location, temperature, precipitation, atmospheric humidity and owner.
@@ -26,16 +26,16 @@ public class Garden {
      */
     public Garden(String name,
                   String location,
-                  Double temperature,
-                  Double precipitation,
-                  Integer atmosphericHumidity,
+                  double temperature,
+                  double precipitation,
+                  int atmosphericHumidity,
                   Account owner) {
         this.name = Objects.requireNonNull(name, "Garden name cannot be null");
         this.location = Objects.requireNonNull(location, "Garden location cannot be null");
-        this.temperature = temperature;
+        this.temperature = temperature;;
         this.precipitation = precipitation;
         this.atmosphericHumidity = atmosphericHumidity;
-        this.owner = owner;
+        this.owner = Objects.requireNonNull(owner, "Garden owner cannot be null");;
         this.gardenPlots = new ArrayList<>();
     }
 
@@ -176,9 +176,9 @@ public class Garden {
         return String.format("Garden: %s located in %s.\nConditions:\n\t- Temp: %s\n\t- Precip: %s\n\t- Humidity: %s\n\t- Owner: %s\n\t- Total Plots: %d",
                 name,
                 location,
-                temperature != null ? temperature + "°" : "N/A",
-                precipitation != null ? precipitation + "mm" : "N/A",
-                atmosphericHumidity != null ? atmosphericHumidity + "%" : "N/A",
+                temperature + "°",
+                precipitation + "mm",
+                atmosphericHumidity + "%",
                 owner != null ? owner.getName() : "Unknown",
                 gardenPlots != null ? gardenPlots.size() : 0);
     }
