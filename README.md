@@ -1,47 +1,44 @@
 # Community Garden
 
-## Running the shared tests
+CAB302 group project: a JavaFX desktop app for managing community gardens and member accounts. Built with Java 21, Maven and SQLite. Still in development.
 
-Install JDK 21 and set `JAVA_HOME` to its installation directory (not its `bin` directory).
-Run commands from the repository folder containing `pom.xml`. The Maven wrapper
-downloads the project's Maven version, so a separate Maven installation is not required.
+## Getting started
 
-Windows PowerShell:
+1. Open the folder containing `pom.xml` in IntelliJ as a Maven project.
+2. Set the project SDK and Maven runner JDK to Java 21.
+3. Reload Maven to download the dependencies.
+4. In the Maven panel, run `Plugins → javafx → javafx:run` to start the app.
 
-```powershell
-$env:JAVA_HOME = 'C:\path\to\your\jdk-21'
-.\mvnw.cmd clean test
-```
-
-macOS / Linux:
+You can also run it from the project folder in a terminal:
 
 ```sh
-export JAVA_HOME=/path/to/your/jdk-21
+# Windows PowerShell
+.\mvnw.cmd javafx:run
+
+# Git Bash, macOS or Linux
+sh ./mvnw javafx:run
+```
+
+For terminal commands, set `JAVA_HOME` to your JDK 21 installation folder.
+
+## Tests
+
+In IntelliJ, right-click `src/test/java` and select **Run All Tests**.
+To run through Maven, use `Lifecycle → test` in the Maven panel, or:
+
+```sh
+# Windows PowerShell
+.\mvnw.cmd clean test
+
+# Git Bash, macOS or Linux
 sh ./mvnw clean test
 ```
 
-In IntelliJ, select JDK 21 for the project and Maven runner, then reload the Maven
-project. Tests in `src/test/java` can also be run through IntelliJ's test runner.
-Use the Maven command above to check the same suite as GitHub Actions.
+Keep new tests under `src/test/java` in the matching package, with class names ending in `Test`. GitHub Actions also runs the Maven tests on pushes and pull requests.
 
-## Where tests belong
+## Project structure
 
-Keep one shared set of Java tests under `src/test/java`, in directories matching
-their package declarations. Move existing tests instead of copying them. Test
-classes should have names ending in `Test` so Surefire discovers them automatically.
-
-The consolidated suite contains 104 active test methods across 10 test classes.
-The two previous `AccountTest` files are combined: three basic null-input checks
-were replaced by the existing checks that also verify the exception messages.
-The combined class preserves field checks and profile-update behaviour.
-
-`GardenPlotTest.java` is a preserved, fully commented-out draft, and `GardenTest`
-contains commented-out plot tests. These are unfinished code, not executed or
-skipped JUnit tests, and are excluded from the active count. They must be adapted
-to the implemented model before being enabled.
-
-Check Maven's final `Tests run`, `Failures`, `Errors`, and `Skipped` totals.
-Detailed reports are written to `target/surefire-reports`. The build fails if
-Surefire discovers no tests. Compilation errors mean the test suite did not run.
-
-GitHub Actions runs the shared suite on pushes and pull requests using Java 21.
+- `src/main/java` — application code
+- `src/main/resources` — FXML views, styles and images
+- `src/test/java` — tests
+- `pom.xml` — dependencies and build configuration
