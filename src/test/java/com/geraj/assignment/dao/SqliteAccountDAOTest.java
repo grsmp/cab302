@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.sql.PreparedStatement;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -109,6 +110,43 @@ class SqliteAccountDAOTest {
                 () -> assertEquals("0498765432", savedAccount.getPhoneNumber()),
                 () -> assertEquals("alex", savedAccount.getName()),
                 () -> assertEquals("second-hash", savedAccount.getHash())
+        );
+    }
+
+    /**
+     * Verifies that retrieving an existing account preserves its database ID.
+     * The row is inserted directly so the test does not depend on createAccount
+     * assigning generated identifiers, which will be tested separately.
+     *
+     * @throws SQLException if the test row cannot be inserted
+     */
+    @Test
+    void getAccountByIdShouldPreserveStoredIdentifier() throws SQLException {
+        // Use an explicit ID to verify that the DAO reads the stored value.
+        String query = """
+            INSERT INTO accounts
+                (id, name, email, firstName, lastName, phoneNumber, hash)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """;
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, 42);
+            statement.setString(2, "harresh");
+            statement.setString(3, "harresh@example.com");
+            statement.setString(4, "Harresh");
+            statement.setString(5, "Patel");
+            statement.setString(6, "0412345678");
+            statement.setString(7, "stored-hash");
+            statement.executeUpdate();
+        }
+
+        Optional<Account> result = accountDAO.getAccountById(42);
+
+        assertTrue(result.isPresent(), "The stored account should be found.");
+        assertEquals(
+                Integer.valueOf(42),
+                result.orElseThrow().getId(),
+                "The retrieved account should retain its database identifier."
         );
     }
 
