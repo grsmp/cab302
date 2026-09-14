@@ -65,6 +65,6 @@ public class GardenListController {
 
     @FXML
     private void onBack(ActionEvent actionEvent) {
-        SceneSwitcher.switchScene(actionEvent, "garden-view.fxml");
+        SceneSwitcher.switchScene(actionEvent, "main-view.fxml");
     }
 }

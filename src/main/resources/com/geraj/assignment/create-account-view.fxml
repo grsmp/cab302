@@ -7,103 +7,111 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.BorderPane?>
 
-<VBox alignment="CENTER"
-      spacing="20.0"
-      xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.geraj.assignment.controller.CreateAccountController">
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.geraj.assignment.controller.CreateAccountController">
+  <top>
+    <fx:include source="nav-bar.fxml"/>
+  </top>
 
-  <padding>
-    <Insets top="20.0"
-            right="20.0"
-            bottom="20.0"
-            left="20.0"/>
-  </padding>
+  <center>
+      <VBox alignment="CENTER"
+            spacing="20.0">
 
-  <Label text="Welcome to the CAB302 GERAJ Application!"/>
-  <Label text="Create an Account"/>
+        <padding>
+          <Insets top="20.0"
+                  right="20.0"
+                  bottom="20.0"
+                  left="20.0"/>
+        </padding>
 
-  <GridPane alignment="CENTER"
-            hgap="10.0"
-            vgap="10.0">
+        <Label text="Welcome to the CAB302 GERAJ Application!"/>
+        <Label text="Create an Account"/>
 
-    <Label text="Enter First Name:"
-           GridPane.columnIndex="0"
-           GridPane.rowIndex="0"/>
+        <GridPane alignment="CENTER"
+                  hgap="10.0"
+                  vgap="10.0">
 
-    <TextField fx:id="firstNameTextField"
-               promptText="First name"
-               GridPane.columnIndex="1"
-               GridPane.rowIndex="0"/>
+          <Label text="Enter First Name:"
+                 GridPane.columnIndex="0"
+                 GridPane.rowIndex="0"/>
 
-    <Label text="Enter Surname:"
-           GridPane.columnIndex="0"
-           GridPane.rowIndex="1"/>
+          <TextField fx:id="firstNameTextField"
+                     promptText="First name"
+                     GridPane.columnIndex="1"
+                     GridPane.rowIndex="0"/>
 
-    <TextField fx:id="surnameTextField"
-               promptText="Surname"
-               GridPane.columnIndex="1"
-               GridPane.rowIndex="1"/>
+          <Label text="Enter Surname:"
+                 GridPane.columnIndex="0"
+                 GridPane.rowIndex="1"/>
 
-    <Label text="Create Username:"
-           GridPane.columnIndex="0"
-           GridPane.rowIndex="2"/>
+          <TextField fx:id="surnameTextField"
+                     promptText="Surname"
+                     GridPane.columnIndex="1"
+                     GridPane.rowIndex="1"/>
 
-    <TextField fx:id="usernameTextField"
-               promptText="Username"
-               GridPane.columnIndex="1"
-               GridPane.rowIndex="2"/>
+          <Label text="Create Username:"
+                 GridPane.columnIndex="0"
+                 GridPane.rowIndex="2"/>
 
-    <Label text="Enter Email:"
-           GridPane.columnIndex="0"
-           GridPane.rowIndex="3"/>
+          <TextField fx:id="usernameTextField"
+                     promptText="Username"
+                     GridPane.columnIndex="1"
+                     GridPane.rowIndex="2"/>
 
-    <TextField fx:id="emailTextField"
-               promptText="Email address"
-               GridPane.columnIndex="1"
-               GridPane.rowIndex="3"/>
+          <Label text="Enter Email:"
+                 GridPane.columnIndex="0"
+                 GridPane.rowIndex="3"/>
 
-    <Label text="Enter Phone Number:"
-           GridPane.columnIndex="0"
-           GridPane.rowIndex="4"/>
+          <TextField fx:id="emailTextField"
+                     promptText="Email address"
+                     GridPane.columnIndex="1"
+                     GridPane.rowIndex="3"/>
 
-    <TextField fx:id="phoneNumberTextField"
-               promptText="Phone number"
-               GridPane.columnIndex="1"
-               GridPane.rowIndex="4"/>
+          <Label text="Enter Phone Number:"
+                 GridPane.columnIndex="0"
+                 GridPane.rowIndex="4"/>
 
-    <Label text="Enter Password:"
-           GridPane.columnIndex="0"
-           GridPane.rowIndex="5"/>
+          <TextField fx:id="phoneNumberTextField"
+                     promptText="Phone number"
+                     GridPane.columnIndex="1"
+                     GridPane.rowIndex="4"/>
 
-    <PasswordField fx:id="passwordField"
-                   promptText="Password"
-                   GridPane.columnIndex="1"
-                   GridPane.rowIndex="5"/>
+          <Label text="Enter Password:"
+                 GridPane.columnIndex="0"
+                 GridPane.rowIndex="5"/>
 
-    <Label text="Confirm Password:"
-           GridPane.columnIndex="0"
-           GridPane.rowIndex="6"/>
+          <PasswordField fx:id="passwordField"
+                         promptText="Password"
+                         GridPane.columnIndex="1"
+                         GridPane.rowIndex="5"/>
 
-    <PasswordField fx:id="confirmPasswordField"
-                   promptText="Confirm password"
-                   GridPane.columnIndex="1"
-                   GridPane.rowIndex="6"/>
+          <Label text="Confirm Password:"
+                 GridPane.columnIndex="0"
+                 GridPane.rowIndex="6"/>
 
-  </GridPane>
+          <PasswordField fx:id="confirmPasswordField"
+                         promptText="Confirm password"
+                         GridPane.columnIndex="1"
+                         GridPane.rowIndex="6"/>
 
-  <Label fx:id="messageLabel"
-         textFill="RED"
-         wrapText="true"/>
+        </GridPane>
 
-  <Button fx:id="createAccountButton"
-          text="Create Account"
-          prefWidth="200.0"
-          onAction="#onCreateAccount"/>
+        <Label fx:id="messageLabel"
+               textFill="RED"
+               wrapText="true"/>
 
-  <Button text="Back"
-          prefWidth="200.0"
-          onAction="#onBack"/>
+        <Button fx:id="createAccountButton"
+                text="Create Account"
+                prefWidth="200.0"
+                onAction="#onCreateAccount"/>
 
-</VBox>
+        <Button text="Back"
+                prefWidth="200.0"
+                onAction="#onBack"/>
+
+      </VBox>
+  </center>
+</BorderPane>

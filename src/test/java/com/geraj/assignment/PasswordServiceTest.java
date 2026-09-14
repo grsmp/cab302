@@ -1,3 +1,5 @@
+package com.geraj.assignment;
+
 import com.geraj.assignment.PasswordService;
 import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;

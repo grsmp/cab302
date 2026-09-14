@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.geraj.assignment.controller.CreateGardenController"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane prefHeight="540.0" prefWidth="810.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geraj.assignment.controller.CreateGardenController">
+    <top>
+        <fx:include source="nav-bar.fxml" />
+    </top>
 
-    <Label fx:id="createGardenLabel" text="Create Garden Page"/>
-</AnchorPane>
+    <center>
+        <VBox>
+            <Label fx:id="createGardenLabel" text="Create Garden Page" />
+        </VBox>
+    </center>
+</BorderPane>

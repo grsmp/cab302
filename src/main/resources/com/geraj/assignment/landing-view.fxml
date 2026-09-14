@@ -5,29 +5,38 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER"
-      spacing="20.0"
-      xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.geraj.assignment.controller.LandingController">
+<?import javafx.scene.layout.BorderPane?>
 
-    <padding>
-        <Insets top="30.0"
-                right="30.0"
-                bottom="30.0"
-                left="30.0"/>
-    </padding>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.geraj.assignment.controller.LandingController">
+    <top>
+        <fx:include source="nav-bar.fxml"/>
+    </top>
 
-    <Label text="Welcome to the CAB302 GERAJ Application!"/>
+    <center>
+        <VBox alignment="CENTER"
+              spacing="20.0">
 
-    <Label text="Please sign in or create an account to continue."/>
+            <padding>
+                <Insets top="30.0"
+                        right="30.0"
+                        bottom="30.0"
+                        left="30.0"/>
+            </padding>
 
-    <Button text="Sign In"
-            prefWidth="200.0"
-            onAction="#onSignIn"/>
+            <Label text="Welcome to the CAB302 GERAJ Application!"/>
 
-    <Button text="Create Account"
-            prefWidth="200.0"
-            onAction="#onCreateAccount"/>
+            <Label text="Please sign in or create an account to continue."/>
 
-</VBox>
+            <Button text="Sign In"
+                    prefWidth="200.0"
+                    onAction="#onSignIn"/>
+
+            <Button text="Create Account"
+                    prefWidth="200.0"
+                    onAction="#onCreateAccount"/>
+
+        </VBox>
+    </center>
+</BorderPane>

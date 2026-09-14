@@ -1,0 +1,15 @@
+.nav-link {
+    -fx-font-size: 13px;
+    -fx-text-fill: #111111;
+    -fx-cursor: hand;
+    -fx-font-weight: normal;
+}
+
+.nav-link:hover {
+    -fx-text-fill: #555555;
+}
+
+.nav-link.active {
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+}

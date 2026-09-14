@@ -16,12 +16,12 @@ public class Account {
 
     /**
      * Constructs a new Account with the specified name, email, first name, last name, phone number and password hash.
-     * @param name The username of the Account.
-     * @param email The email of the Account.
-     * @param firstName The first name of the Account.
-     * @param lastName The last name of the Account.
-     * @param phoneNumber The phone number of the Account.
-     * @param hash The hashed password of the Account.
+     * @param name The username of the Account
+     * @param email The email of the Account
+     * @param firstName The first name of the Account
+     * @param lastName The last name of the Account
+     * @param phoneNumber The phone number of the Account
+     * @param hash The hashed password of the Account
      */
     public Account(
             String name,
@@ -64,7 +64,7 @@ public class Account {
 
     /**
      * Gets the name of the account.
-     * @return the name.
+     * @return the name
      */
     public String getName() {
         return name;
@@ -84,7 +84,7 @@ public class Account {
 
     /**
      * Gets the email of the account.
-     * @return the email.
+     * @return the email
      */
     public String getEmail() {
         return email;
@@ -104,7 +104,7 @@ public class Account {
 
     /**
      * Gets the first name of the account.
-     * @return the first name.
+     * @return the first name
      */
     public String getFirstName() {
         return firstName;
@@ -124,7 +124,7 @@ public class Account {
 
     /**
      * Gets the last name of the account.
-     * @return the last name.
+     * @return the last name
      */
     public String getLastName() {
         return lastName;
@@ -144,7 +144,7 @@ public class Account {
 
     /**
      * Gets the phone number of the account.
-     * @return the phone number.
+     * @return the phone number
      */
     public String getPhoneNumber() {
         return phoneNumber;
@@ -164,7 +164,7 @@ public class Account {
 
     /**
      * Gets the hash of the account.
-     * @return the hash.
+     * @return the hash
      */
     public String getHash() {
         return hash;

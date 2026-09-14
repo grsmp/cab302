@@ -7,58 +7,65 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.BorderPane?>
 
-<VBox alignment="CENTER"
-      spacing="20.0"
-      xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.geraj.assignment.controller.SignInController">
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.geraj.assignment.controller.SignInController">
+    <top>
+        <fx:include source="nav-bar.fxml"/>
+    </top>
+    <center>
+        <VBox alignment="CENTER"
+              spacing="20.0">
 
-    <padding>
-        <Insets top="20.0"
-                right="20.0"
-                bottom="20.0"
-                left="20.0"/>
-    </padding>
+            <padding>
+                <Insets top="20.0"
+                        right="20.0"
+                        bottom="20.0"
+                        left="20.0"/>
+            </padding>
 
-    <Label text="Welcome to the CAB302 GERAJ Application!"/>
-    <Label text="Sign In to Your Account"/>
+            <Label text="Welcome to the CAB302 GERAJ Application!"/>
+            <Label text="Sign In to Your Account"/>
 
-    <GridPane alignment="CENTER"
-              hgap="10.0"
-              vgap="10.0">
+            <GridPane alignment="CENTER"
+                      hgap="10.0"
+                      vgap="10.0">
 
-        <Label text="Enter Username:"
-               GridPane.columnIndex="0"
-               GridPane.rowIndex="0"/>
+                <Label text="Enter Username:"
+                       GridPane.columnIndex="0"
+                       GridPane.rowIndex="0"/>
 
-        <TextField fx:id="usernameTextField"
-                   promptText="Username"
-                   GridPane.columnIndex="1"
-                   GridPane.rowIndex="0"/>
+                <TextField fx:id="usernameTextField"
+                           promptText="Username"
+                           GridPane.columnIndex="1"
+                           GridPane.rowIndex="0"/>
 
-        <Label text="Enter Password:"
-               GridPane.columnIndex="0"
-               GridPane.rowIndex="1"/>
-
-        <PasswordField fx:id="passwordField"
-                       promptText="Password"
-                       GridPane.columnIndex="1"
+                <Label text="Enter Password:"
+                       GridPane.columnIndex="0"
                        GridPane.rowIndex="1"/>
 
-    </GridPane>
+                <PasswordField fx:id="passwordField"
+                               promptText="Password"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="1"/>
 
-    <Label fx:id="messageLabel"
-           textFill="RED"
-           wrapText="true"/>
+            </GridPane>
 
-    <Button fx:id="signInButton"
-            text="Sign In"
-            prefWidth="200.0"
-            onAction="#onSignIn"/>
+            <Label fx:id="messageLabel"
+                   textFill="RED"
+                   wrapText="true"/>
 
-    <Button text="Back"
-            prefWidth="200.0"
-            onAction="#onBack"/>
+            <Button fx:id="signInButton"
+                    text="Sign In"
+                    prefWidth="200.0"
+                    onAction="#onSignIn"/>
 
-</VBox>
+            <Button text="Back"
+                    prefWidth="200.0"
+                    onAction="#onBack"/>
+
+        </VBox>
+    </center>
+</BorderPane>

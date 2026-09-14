@@ -8,18 +8,5 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class GardenContoller {
-    @FXML
-    private void onSearchButton(ActionEvent actionEvent) {
-        SceneSwitcher.switchScene(actionEvent, "garden-list-view.fxml");
-    }
-
-    @FXML
-    private void onCreateButton(ActionEvent actionEvent) {
-        SceneSwitcher.switchScene(actionEvent, "create-garden-view.fxml");
-    }
-
-    @FXML
-    private void onSelectButton(ActionEvent actionEvent) {
-        SceneSwitcher.switchScene(actionEvent, "main-view.fxml");
-    }
+    // THIS SHOULD BE THE PAGE WERE YOU CAN SEE THE GARDEN
 }

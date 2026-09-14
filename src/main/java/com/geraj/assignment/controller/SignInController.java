@@ -1,5 +1,6 @@
 package com.geraj.assignment.controller;
 
+import com.geraj.assignment.AccountSession;
 import com.geraj.assignment.PasswordService;
 import com.geraj.assignment.SceneSwitcher;
 
@@ -58,6 +59,13 @@ public class SignInController {
 
         Account account = accountDAO.getAccountByName(username);
 
+        if (account == null) {
+            messageLabel.setText(
+                    "Incorrect username or password."
+            );
+            return;
+        }
+
         PasswordService passwordService =
                 PasswordService.getInstance();
 
@@ -67,6 +75,7 @@ public class SignInController {
                         password
                 )
         ) {
+            AccountSession.startSession(account);
             SceneSwitcher.switchScene(
                     actionEvent,
                     "main-view.fxml"
@@ -74,7 +83,7 @@ public class SignInController {
         }
         else {
             messageLabel.setText(
-                    "Incorrect password."
+                    "Incorrect username or password."
             );
         }
     }

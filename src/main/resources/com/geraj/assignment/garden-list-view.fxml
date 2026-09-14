@@ -1,49 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.collections.FXCollections?>
-<VBox spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.geraj.assignment.controller.GardenListController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
 
-    <Button fx:id="backButton"
-            text="← Back"
-            onAction="#onBack"
-    />
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.geraj.assignment.controller.GardenListController">
+    <top>
+        <fx:include source="nav-bar.fxml"/>
+    </top>
 
-    <VBox alignment="CENTER">
-        <Label style="-fx-font-size: 20px;">
-            Find your Garden
-        </Label>
+    <center>
+        <VBox spacing="20.0">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+            </padding>
+
+            <Button fx:id="backButton"
+                    text="← Back"
+                    onAction="#onBack"
+            />
+
+            <VBox alignment="CENTER">
+                <Label style="-fx-font-size: 20px;">
+                    Find your Garden
+                </Label>
 
 
-        <GridPane hgap="5.0" vgap="5.0" alignment="CENTER">
-            <Label text="Garden name:" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="RIGHT"/>
-            <Label text="Garden location:" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="RIGHT"/>
-            <TextField fx:id="gardenNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-            <TextField fx:id="gardenLocationTextField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-        </GridPane>
+                <GridPane hgap="5.0" vgap="5.0" alignment="CENTER">
+                    <Label text="Garden name:" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="RIGHT"/>
+                    <Label text="Garden location:" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.halignment="RIGHT"/>
+                    <TextField fx:id="gardenNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                    <TextField fx:id="gardenLocationTextField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                </GridPane>
 
-        <VBox alignment="CENTER">
-            <Label>
-                Gardens
-            </Label>
+                <VBox alignment="CENTER">
+                    <Label>
+                        Gardens
+                    </Label>
 
-            <ListView fx:id="gardenListView" />
+                    <ListView fx:id="gardenListView" />
+                </VBox>
+
+
+                <Button fx:id="searchButton"
+                        text="Search"
+                        onAction="#onSearch"
+                />
+            </VBox>
         </VBox>
-
-
-        <Button fx:id="searchButton"
-                text="Search"
-                onAction="#onSearch"
-        />
-    </VBox>
-</VBox>
+    </center>
+</BorderPane>

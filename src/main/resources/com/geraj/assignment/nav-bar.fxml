@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.geraj.assignment.controller.NavController"
+            stylesheets="@style.css"
+            prefHeight="60"
+            alignment="CENTER_LEFT"
+            spacing="10"
+            style="-fx-background-color: white;
+             -fx-border-color: #dddddd;
+             -fx-border-width: 0 0 1 0;
+             -fx-padding: 0 18 0 18;">
+    <Label
+        text="CommunityPlant"
+        style="-fx-font-size: 16px;"
+    />
+
+    <HBox spacing="10" alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+        <!-- Logged in -->
+        <Label fx:id="gardenLabel"
+               text="Garden"
+               onMouseClicked="#goToGarden"
+               styleClass="nav-link"/>
+        <Label fx:id="scheduleLabel"
+               text="Schedule"
+               onMouseClicked="#goToSchedule"
+               styleClass="nav-link"/>
+        <Label fx:id="accountLabel"
+               text="Account"
+               onMouseClicked="#goToAccount"
+               styleClass="nav-link"/>
+        <Label fx:id="mainLabel"
+               text="Main"
+               onMouseClicked="#goToMain"
+               styleClass="nav-link"/>
+
+        <!-- Logged out -->
+        <Label fx:id="signInLabel"
+               text="Sign In"
+               onMouseClicked="#goToSignIn"
+               styleClass="nav-link"/>
+        <Label fx:id="createAccountLabel"
+               text="Create Account"
+               onMouseClicked="#goToCreateAccount"
+               styleClass="nav-link"/>
+    </HBox>
+
+</HBox>

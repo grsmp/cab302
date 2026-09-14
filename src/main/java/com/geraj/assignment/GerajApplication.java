@@ -12,10 +12,11 @@ public class GerajApplication extends Application {
     public static final String TITLE = "CAB302 GERAJ Application";
     public static final int WIDTH = 640;
     public static final int HEIGHT = 360;
+    public static final String LANDING_PAGE = "landing-view.fxml";
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(GerajApplication.class.getResource("landing-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(GerajApplication.class.getResource(LANDING_PAGE));
         Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
         stage.setTitle(TITLE);
         stage.setScene(scene);
