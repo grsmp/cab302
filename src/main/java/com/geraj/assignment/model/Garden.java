@@ -35,7 +35,7 @@ public class Garden {
         this.temperature = temperature;;
         this.precipitation = precipitation;
         this.atmosphericHumidity = atmosphericHumidity;
-        this.owner = Objects.requireNonNull(owner, "Garden owner cannot be null");;
+        this.owner = Objects.requireNonNull(owner, "Garden owner cannot be null");
         this.gardenPlots = new ArrayList<>();
     }
 
@@ -52,7 +52,7 @@ public class Garden {
      * @param name the new name of the garden
      */
     public void setName(String name) {
-        this.name = name;
+        this.name = Objects.requireNonNull(name, "Garden name cannot be null");
     }
 
     /**
@@ -68,7 +68,7 @@ public class Garden {
      * @param location the new location of the garden
      */
     public void setLocation(String location) {
-        this.location = location;
+        this.location = Objects.requireNonNull(location, "Garden location cannot be null");
     }
 
     /**
@@ -132,7 +132,7 @@ public class Garden {
      * @param owner the new owner of the garden
      */
     public void setOwner(Account owner) {
-        this.owner = owner;
+        this.owner = Objects.requireNonNull(owner, "Garden owner cannot be null");
     }
 
     /**
@@ -180,6 +180,6 @@ public class Garden {
                 precipitation + "mm",
                 atmosphericHumidity + "%",
                 owner != null ? owner.getName() : "Unknown",
-                gardenPlots != null ? gardenPlots.size() : 0);
+                gardenPlots.size());
     }
 }
