@@ -9,6 +9,7 @@ import java.util.Objects;
  * A simple model class representing a garden with a name, location, temperature, precipitation, atmospheric humidity, owner and garden plots.
  */
 public class Garden {
+    private Integer id;
     private String name;
     private String location;
     private double temperature;
@@ -39,6 +40,14 @@ public class Garden {
         this.atmosphericHumidity = atmosphericHumidity;
         this.owner = Objects.requireNonNull(owner, "Garden owner cannot be null");
         this.gardenPlots = new ArrayList<>();
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**

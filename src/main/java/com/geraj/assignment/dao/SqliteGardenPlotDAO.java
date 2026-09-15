@@ -4,6 +4,7 @@ import com.geraj.assignment.model.Garden;
 import com.geraj.assignment.model.GardenPlot;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
 
@@ -21,14 +22,14 @@ public class SqliteGardenPlotDAO implements IGardenPlotDAO {
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 width REAL NOT NULL,
                 length REAL NOT NULL,
-                ph INTEGER NOT NULL,
+                ph REAL NOT NULL,
                 light INTEGER NOT NULL,
                 nutriments INTEGER NOT NULL,
                 salinity INTEGER NOT NULL,
                 texture INTEGER NOT NULL,
                 depth REAL NOT NULL,
                 soilHumidity INTEGER NOT NULL,
-                FOREIGN KEY (owner_id) REFERENCES accounts(id)
+                FOREIGN KEY (garden_id) REFERENCES gardens(id)
             );
             """;
 
@@ -41,7 +42,38 @@ public class SqliteGardenPlotDAO implements IGardenPlotDAO {
 
     @Override
     public void createGardenPlot(GardenPlot gardenPlot, Garden garden) {
+        String query = """
+            INSERT INTO gardenPlots (width, length, ph, light, nutriments, salinity, texture, depth, soilHumidity, garden_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """;
 
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setDouble(1, gardenPlot.getWidth());
+            statement.setDouble(2, gardenPlot.getLength());
+            statement.setDouble(3, gardenPlot.getPh());
+            statement.setInt(4, gardenPlot.getLight());
+            statement.setInt(5, gardenPlot.getNutriments());
+            statement.setInt(6, gardenPlot.getSalinity());
+            statement.setInt(7, gardenPlot.getTexture());
+            statement.setDouble(8, gardenPlot.getSoilHumidity());
+//            statement.setInt(9, garden.getId());
+
+            if (garden.getOwner() != null) {
+                statement.setInt(6, garden.getOwner().getId());
+            } else {
+                statement.setNull(6, java.sql.Types.INTEGER);
+            }
+
+            statement.executeUpdate();
+
+//            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+//                if (generatedKeys.next()) {
+//                    garden.setId(generatedKeys.getInt(1));
+//                }
+//            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

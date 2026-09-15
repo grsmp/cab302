@@ -63,11 +63,11 @@ public class SqliteGardenDAO implements IGardenDAO {
 
             statement.executeUpdate();
 
-//            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-//                if (generatedKeys.next()) {
-//                    garden.setId(generatedKeys.getInt(1));
-//                }
-//            }
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    garden.setId(generatedKeys.getInt(1));
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
