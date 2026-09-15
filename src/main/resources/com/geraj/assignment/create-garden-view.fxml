@@ -1,16 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="540.0" prefWidth="810.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.geraj.assignment.controller.CreateGardenController">
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.geraj.assignment.controller.CreateGardenController"
+            prefWidth="810" prefHeight="540"
+            style="-fx-background-color: #F7F6F2;">
+
     <top>
-        <fx:include source="nav-bar.fxml" />
+        <fx:include source="nav-bar.fxml"/>
     </top>
 
     <center>
-        <VBox>
-            <Label fx:id="createGardenLabel" text="Create Garden Page" />
-        </VBox>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER"
+                    style="-fx-background: #F7F6F2;">
+            <content>
+                <VBox alignment="TOP_CENTER">
+                    <padding>
+                        <Insets top="24" right="24" bottom="24" left="24"/>
+                    </padding>
+
+                    <VBox maxWidth="440" spacing="12"
+                          style="-fx-background-color: white;
+                                 -fx-padding: 24;
+                                 -fx-background-radius: 8;">
+
+                        <Label text="Create Garden"
+                               style="-fx-font-size: 24;
+                                      -fx-font-weight: bold;"/>
+
+                        <Label text="Enter your garden details."
+                               style="-fx-text-fill: #5C5A54;"/>
+
+                        <Label text="Garden name *"/>
+                        <TextField fx:id="nameField"
+                                   promptText="e.g. Riverside Garden"/>
+
+                        <Label text="Location *"/>
+                        <TextField fx:id="locationField"
+                                   promptText="e.g. West End, Brisbane"/>
+
+                        <Label fx:id="messageLabel"
+                               wrapText="true"/>
+
+                        <HBox spacing="12" alignment="CENTER_RIGHT">
+                            <Button text="Back"
+                                    onAction="#onBack"/>
+
+                            <Button fx:id="createButton"
+                                    text="Create garden"
+                                    onAction="#onCreate"
+                                    defaultButton="true"
+                                    style="-fx-background-color: #1E1E1E;
+                                           -fx-text-fill: white;"/>
+                        </HBox>
+
+                        <Button text="View gardens"
+                                onAction="#onViewGardens"/>
+                    </VBox>
+                </VBox>
+            </content>
+        </ScrollPane>
     </center>
 </BorderPane>
