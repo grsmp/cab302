@@ -56,7 +56,7 @@ public class SqliteGardenPlotDAO implements IGardenPlotDAO {
             statement.setInt(6, gardenPlot.getSalinity());
             statement.setInt(7, gardenPlot.getTexture());
             statement.setDouble(8, gardenPlot.getSoilHumidity());
-//            statement.setInt(9, garden.getId());
+            statement.setInt(9, garden.getId());
 
             if (garden.getOwner() != null) {
                 statement.setInt(6, garden.getOwner().getId());
