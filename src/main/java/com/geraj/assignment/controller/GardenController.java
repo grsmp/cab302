@@ -33,7 +33,8 @@ public class GardenController {
 
     @FXML
     private void onEdit(ActionEvent actionEvent) {
-        SceneSwitcher.switchScene(actionEvent, "garden-editor-view.fxml");
+        GardenEditorController controller = SceneSwitcher.switchScene(actionEvent, "garden-editor-view.fxml");
+        controller.setGarden(user_garden);
     }
 
     private Garden getUserGarden() {
