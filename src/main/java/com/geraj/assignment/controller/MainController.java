@@ -40,4 +40,12 @@ public class MainController {
                 "landing-view.fxml"
         );
     }
+
+    @FXML
+    private void onSchedule(ActionEvent actionEvent) {
+        SceneSwitcher.switchScene(
+                actionEvent,
+                "schedule-view.fxml"
+        );
+    }
 }

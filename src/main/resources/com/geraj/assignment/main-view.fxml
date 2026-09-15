@@ -52,8 +52,8 @@
                     <Insets top="40.0" right="40.0" bottom="60.0" left="40.0"/>
                 </padding>
 
-                <Button fx:id="viewGardensButton"
-                        text="&#127793;   View Gardens"
+                <Button fx:id="searchGardensButton"
+                        text="&#127793;   Search Gardens"
                         prefWidth="360.0"
                         prefHeight="52.0"
                         alignment="CENTER_LEFT"
@@ -76,6 +76,14 @@
                         onAction="#onViewProfile"
                         style="-fx-background-color: white; -fx-text-fill: #1E1E1E; -fx-font-weight: bold; -fx-font-size: 14; -fx-background-radius: 8; -fx-border-color: #C9C7C0; -fx-border-radius: 8; -fx-border-width: 1.5; -fx-padding: 0 0 0 20;"/>
 
+                <Button fx:id="scheduleButton"
+                        text="&#8592;   Schedule"
+                        prefWidth="360.0"
+                        prefHeight="44.0"
+                        alignment="CENTER_LEFT"
+                        onAction="#onSchedule"
+                        style="-fx-background-color: white; -fx-text-fill: #1E1E1E; -fx-font-weight: bold; -fx-font-size: 14; -fx-background-radius: 8; -fx-border-color: #C9C7C0; -fx-border-radius: 8; -fx-border-width: 1.5; -fx-padding: 0 0 0 20;"/>
+
                 <Region prefHeight="10.0"/>
 
                 <Button fx:id="logoutButton"
@@ -85,6 +93,8 @@
                         alignment="CENTER_LEFT"
                         onAction="#onLogout"
                         style="-fx-background-color: transparent; -fx-text-fill: #8A8880; -fx-font-size: 13; -fx-padding: 0 0 0 20;"/>
+
+
 
             </VBox>
 
