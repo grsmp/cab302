@@ -17,6 +17,7 @@ public class Account {
     private String lastName;
     private String phoneNumber;
     private String hash;
+    private Garden garden;
 
     /**
      * Constructs a new Account with the specified name, email, first name, last name, phone number and password hash.
@@ -33,7 +34,8 @@ public class Account {
             String firstName,
             String lastName,
             String phoneNumber,
-            String hash
+            String hash,
+            Garden garden
     ) {
         this.name = Objects.requireNonNull(
                 name,
@@ -64,6 +66,8 @@ public class Account {
                 hash,
                 "Account password hash cannot be null"
         );
+
+        this.garden = garden;
     }
 
     /**
@@ -203,5 +207,17 @@ public class Account {
                 hash,
                 "Account password hash cannot be null"
         );
+    }
+
+    public Garden getGarden() {
+        return garden;
+    }
+
+    /**
+     * Sets the name of the account.
+     * @param garden the new name of the account; must not be null
+     */
+    public void setGarden(Garden garden) {
+        this.garden = garden;
     }
 }

@@ -1,12 +1,20 @@
 package com.geraj.assignment.controller;
 
 import com.geraj.assignment.AccountSession;
+import com.geraj.assignment.GerajApplication;
 import com.geraj.assignment.SceneSwitcher;
+import com.geraj.assignment.model.Garden;
 import javafx.event.ActionEvent;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class NavController {
 
@@ -69,6 +77,7 @@ public class NavController {
                 actionEvent,
                 "garden-view.fxml"
         );
+
     }
 
     @FXML

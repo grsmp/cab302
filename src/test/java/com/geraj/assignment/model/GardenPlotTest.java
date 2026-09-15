@@ -132,14 +132,14 @@ public class GardenPlotTest {
 
     @Test
     public void testAddContributor() {
-        Account newContributor = new Account("NewContributor", "newContributor@example.com", "newFirst","newLast", "0987654321", "new_hash_string");
+        Account newContributor = new Account("NewContributor", "newContributor@example.com", "newFirst","newLast", "0987654321", "new_hash_string", null);
         gardenPlot.addContributor(newContributor);
         assertEquals(new ArrayList<Account>(List.of(newContributor)), gardenPlot.getContributors());
     }
 
     @Test
     public void testRemoveGardenPlot() {
-        Account newContributor = new Account("NewContributor", "newContributor@example.com","newFirst","newLast", "0987654321", "new_hash_string");
+        Account newContributor = new Account("NewContributor", "newContributor@example.com","newFirst","newLast", "0987654321", "new_hash_string", null);
         gardenPlot.addContributor(newContributor);
         gardenPlot.removeContributor(newContributor);
         assertEquals(new ArrayList<Account>(), gardenPlot.getContributors());
