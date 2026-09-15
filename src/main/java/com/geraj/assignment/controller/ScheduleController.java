@@ -1,5 +1,7 @@
 package com.geraj.assignment.controller;
 
+import com.geraj.assignment.SceneSwitcher;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -55,17 +57,20 @@ public class ScheduleController {
 
     @FXML
     private void onAddTask() {
-        // TODO: replace with a real "add task" dialog wired to your task model
+        // TODO: replace
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Add Task");
         alert.setHeaderText(null);
-        alert.setContentText("Hook this up to your add-task dialog.");
+        alert.setContentText("add-task dialog.");
         alert.showAndWait();
     }
 
     @FXML
-    private void onBack() {
-        // TODO: navigate back to the main menu via your app's navigation/SceneManager
+    private void onBack(ActionEvent actionEvent) {
+        SceneSwitcher.switchScene(
+                actionEvent,
+                "main-view.fxml"
+        );
     }
 
     private void renderCalendar() {
