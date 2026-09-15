@@ -1,11 +1,14 @@
 package com.geraj.assignment.dao;
 
+import com.geraj.assignment.model.Account;
 import com.geraj.assignment.model.Garden;
 import com.geraj.assignment.model.GardenPlot;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SqliteGardenPlotDAO implements IGardenPlotDAO {
@@ -78,6 +81,37 @@ public class SqliteGardenPlotDAO implements IGardenPlotDAO {
 
     @Override
     public List<GardenPlot> getGardenPlots(Garden garden) {
-        return List.of();
+        ArrayList<GardenPlot> gardenPlots = new ArrayList<>();
+
+        String query = """
+            SELECT *
+            FROM gardenPlots
+            WHERE garden_id IS ?
+            """;
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, garden.getId());
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    double width = resultSet.getDouble("width");
+                    double length = resultSet.getDouble("length");
+                    double ph = resultSet.getDouble("ph");
+                    int light = resultSet.getInt("light");
+                    int nutriments = resultSet.getInt("nutriments");
+                    int salinity = resultSet.getInt("salinity");
+                    int texture = resultSet.getInt("texture");
+                    double depth = resultSet.getDouble("depth");
+                    int soilHumidity = resultSet.getInt("soilHumidity");
+
+                    GardenPlot gardenPlot = new GardenPlot(width, length, ph, light, nutriments, salinity, texture, depth, soilHumidity);
+                    gardenPlots.add(gardenPlot);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return gardenPlots;
     }
 }
