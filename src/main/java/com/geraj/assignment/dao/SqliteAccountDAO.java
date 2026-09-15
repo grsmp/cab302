@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Objects;
 import java.util.Optional;
+import org.sqlite.SQLiteErrorCode;
+import org.sqlite.SQLiteException;
 
 /**
  * Stores and retrieves accounts using SQLite.
@@ -95,6 +97,18 @@ public class SqliteAccountDAO implements IAccountDAO {
                 account.setId(generatedKeys.getInt(1));
             }
         } catch (SQLException exception) {
+            // Translate only an email uniqueness violation into an email conflict.
+            // Other database failures retain their existing error handling.
+            if (exception instanceof SQLiteException sqliteException
+                    && sqliteException.getResultCode()
+                    == SQLiteErrorCode.SQLITE_CONSTRAINT_UNIQUE
+                    && sqliteException.getMessage() != null
+                    && sqliteException.getMessage().contains(
+                    "UNIQUE constraint failed: accounts.email"
+            )) {
+                throw new DuplicateAccountException("email", exception);
+            }
+
             throw new IllegalStateException(
                     "Could not create the account", exception
             );
