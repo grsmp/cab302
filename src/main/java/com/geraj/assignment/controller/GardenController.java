@@ -1,6 +1,7 @@
 package com.geraj.assignment.controller;
 
 import com.geraj.assignment.AccountSession;
+import com.geraj.assignment.SceneSwitcher;
 import com.geraj.assignment.model.Account;
 import com.geraj.assignment.model.Garden;
 import com.geraj.assignment.model.GardenPlot;
@@ -10,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 public class GardenController {
@@ -29,7 +31,12 @@ public class GardenController {
         }
     }
 
-    public Garden getUserGarden() {
+    @FXML
+    private void onEdit(ActionEvent actionEvent) {
+        SceneSwitcher.switchScene(actionEvent, "garden-editor-view.fxml");
+    }
+
+    private Garden getUserGarden() {
         AccountSession session = AccountSession.getInstance();
         if (session == null) {
             gardenNameLabel.setText("No signed-in account is available.");
