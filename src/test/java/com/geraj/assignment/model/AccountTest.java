@@ -54,7 +54,7 @@ class AccountTest {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new Account(
-                        USERNAME, EMAIL, null, LAST_NAME, PHONE_NUMBER, HASH
+                        USERNAME, EMAIL, null, LAST_NAME, PHONE_NUMBER, HASH, null
                 )
         );
 
@@ -66,7 +66,7 @@ class AccountTest {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new Account(
-                        USERNAME, EMAIL, FIRST_NAME, null, PHONE_NUMBER, HASH
+                        USERNAME, EMAIL, FIRST_NAME, null, PHONE_NUMBER, HASH, null
                 )
         );
 
@@ -78,7 +78,7 @@ class AccountTest {
         NullPointerException exception = assertThrows(
                 NullPointerException.class,
                 () -> new Account(
-                        USERNAME, EMAIL, FIRST_NAME, LAST_NAME, null, HASH
+                        USERNAME, EMAIL, FIRST_NAME, LAST_NAME, null, HASH, null
                 )
         );
 
@@ -140,7 +140,8 @@ class AccountTest {
                 FIRST_NAME,
                 LAST_NAME,
                 PHONE_NUMBER,
-                HASH
+                HASH,
+                null
         );
     }
 
@@ -148,7 +149,7 @@ class AccountTest {
 
     @BeforeEach
     public void setUp() {
-        account = new Account("Name", "email@example.com", "First", "Last", "0123456789",  "hash_string");
+        account = new Account("Name", "email@example.com", "First", "Last", "0123456789",  "hash_string", null);
     }
 
     @Test
@@ -164,7 +165,7 @@ class AccountTest {
 
     @Test
     public void testConstructorWithNullName() {
-        assertThrows(NullPointerException.class, () -> new Account(null, "email@example.com", "First", "Last","0123456789","hash_string"));
+        assertThrows(NullPointerException.class, () -> new Account(null, "email@example.com", "First", "Last","0123456789","hash_string", null));
     }
 
     @Test
@@ -180,7 +181,7 @@ class AccountTest {
 
     @Test
     public void testConstructorWithNullEmail() {
-        assertThrows(NullPointerException.class, () -> new Account("Name", null, "First", "Last","0123456789", "hash_string"));
+        assertThrows(NullPointerException.class, () -> new Account("Name", null, "First", "Last","0123456789", "hash_string", null));
     }
 
     @Test
@@ -229,6 +230,6 @@ class AccountTest {
 
     @Test
     public void testConstructorWithNullHash() {
-        assertThrows(NullPointerException.class, () -> new Account("Name", "email@example.com", "First", "Last","0123456789", null));
+        assertThrows(NullPointerException.class, () -> new Account("Name", "email@example.com", "First", "Last","0123456789", null, null));
     }
 }

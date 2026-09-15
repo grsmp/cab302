@@ -12,7 +12,7 @@ public class AccountSessionTest {
     @BeforeEach
     public void setUp() {
         AccountSession.logout();
-        account = new Account("Name", "email@example.com", "First", "Last", "0123456789","hash_string");
+        account = new Account("Name", "email@example.com", "First", "Last", "0123456789","hash_string", null);
     }
 
     @Test
@@ -59,7 +59,7 @@ public class AccountSessionTest {
 
     @Test
     public void startSessionShouldOverwriteExistingSession() {
-        Account newAccount = new Account("NewName", "newEmail@example.com", "NewFirst", "NewLast", "0123456789","new_hash_string");
+        Account newAccount = new Account("NewName", "newEmail@example.com", "NewFirst", "NewLast", "0123456789","new_hash_string", null);
 
         AccountSession.startSession(account);
         AccountSession.startSession(newAccount);

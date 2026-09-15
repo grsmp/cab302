@@ -44,7 +44,8 @@ class ContributionSummaryTest {
                 "Harresh",
                 "Patel",
                 "0412345678",
-                "stored-hash"
+                "stored-hash",
+                null
         );
         IContributionDAO contributionDAO = new StubContributionDAO();
 

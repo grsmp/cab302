@@ -141,7 +141,8 @@ public class CreateAccountController {
                 firstName,
                 surname,
                 phoneNumber,
-                passwordHash
+                passwordHash,
+                null
         );
 
         accountDAO.createAccount(account);
