@@ -45,9 +45,9 @@ public class CreateGardenController {
         Garden garden = new Garden(
                 name,
                 location,
-                null,
-                null,
-                null,
+                1,
+                1,
+                1,
                 session.getAccount()
         );
 

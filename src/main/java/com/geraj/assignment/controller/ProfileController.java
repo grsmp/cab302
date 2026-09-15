@@ -209,8 +209,7 @@ public class ProfileController {
                 firstNameTextField.getText().trim(),
                 lastNameTextField.getText().trim(),
                 phoneNumberTextField.getText().replace(" ", ""),
-                account.getHash(),
-                null
+                account.getHash()
         );
 
         if (!accountDAO.updatePersonalInformation(updatedAccount)) {
