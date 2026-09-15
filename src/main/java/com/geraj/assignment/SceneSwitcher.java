@@ -5,7 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+
 import java.io.IOException;
 
 /**
@@ -36,6 +39,35 @@ public class SceneSwitcher {
             FXMLLoader fxmlLoader = new FXMLLoader(GerajApplication.class.getResource(fxmlFile));
             Parent root = fxmlLoader.load();
             stage.getScene().setRoot(root);
+
+            return fxmlLoader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Opens a new modal window and pauses code execution in the calling controller until the new window is closed.
+     * @param event The event triggered by the UI component.
+     * @param fxmlFile The FXML file for the modal window.
+     * @param title The title of the new window.
+     * @return The controller of the modal window to retrieve data from it.
+     */
+    public static <T> T openModalAndWait(Event event, String fxmlFile, String title) {
+        try {
+            Window parentWindow = ((Node) event.getSource()).getScene().getWindow();
+
+            FXMLLoader fxmlLoader = new FXMLLoader(GerajApplication.class.getResource(fxmlFile));
+            Parent root = fxmlLoader.load();
+
+            Stage dialogStage = new Stage();
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(parentWindow);
+            dialogStage.setTitle(title);
+            dialogStage.setScene(new Scene(root));
+
+            dialogStage.showAndWait();
 
             return fxmlLoader.getController();
         } catch (IOException e) {

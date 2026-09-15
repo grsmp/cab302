@@ -243,4 +243,13 @@ public class GardenPlot {
     public void removePlant(Plant plant) {
         this.plants.remove(plant);
     }
+
+    /**
+     * Returns the string representation of the garden plot.
+     * @return formatted string with the dimensions and pH
+     */
+    @Override
+    public String toString() {
+        return String.format("Plot: %.1fm x %.1fm (pH: %.1f)", width, length, ph);
+    }
 }

@@ -7,6 +7,9 @@ import java.util.Objects;
  */
 public class Account {
 
+    /**
+     * The account's database identifier, or null when no identity is assigned.
+     */
     private Integer id;
     private String name;
     private String email;
@@ -14,6 +17,7 @@ public class Account {
     private String lastName;
     private String phoneNumber;
     private String hash;
+    private Garden garden;
 
     /**
      * Constructs a new Account with the specified name, email, first name, last name, phone number and password hash.
@@ -30,7 +34,8 @@ public class Account {
             String firstName,
             String lastName,
             String phoneNumber,
-            String hash
+            String hash,
+            Garden garden
     ) {
         this.name = Objects.requireNonNull(
                 name,
@@ -61,21 +66,26 @@ public class Account {
                 hash,
                 "Account password hash cannot be null"
         );
+
+        this.garden = garden;
     }
 
     /**
-     * Gets the id of the account.
-     * @return the id
+     * Returns the account's database identifier.
+     *
+     * @return the database identifier, or null when no identity is assigned
      */
     public Integer getId() {
         return id;
     }
 
     /**
-     * Sets the id of the account.
-     * @param id the new id of the account
+     * Sets the account's database identifier.
+     * Assigning an identifier does not change the account's personal information.
+     *
+     * @param id the database identifier, or null to represent an unassigned identity
      */
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -197,5 +207,17 @@ public class Account {
                 hash,
                 "Account password hash cannot be null"
         );
+    }
+
+    public Garden getGarden() {
+        return garden;
+    }
+
+    /**
+     * Sets the name of the account.
+     * @param garden the new name of the account; must not be null
+     */
+    public void setGarden(Garden garden) {
+        this.garden = garden;
     }
 }

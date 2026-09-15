@@ -69,7 +69,7 @@ public class SqliteGardenDAO implements IGardenDAO {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new IllegalStateException("Could not save garden.", e);
         }
     }
 

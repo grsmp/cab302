@@ -209,7 +209,8 @@ public class ProfileController {
                 firstNameTextField.getText().trim(),
                 lastNameTextField.getText().trim(),
                 phoneNumberTextField.getText().replace(" ", ""),
-                account.getHash()
+                account.getHash(),
+                null
         );
 
         if (!accountDAO.updatePersonalInformation(updatedAccount)) {
@@ -257,6 +258,28 @@ public class ProfileController {
     }
 
     /**
+     * Ends the current session and performs navigation when leaving is approved.
+     * If the user cancels the confirmation, the session and current view remain.
+     *
+     * @param navigateAfterLogout the navigation action to perform after logout
+     * @throws NullPointerException if the navigation action is null
+     */
+    public void logout(Runnable navigateAfterLogout) {
+        Objects.requireNonNull(
+                navigateAfterLogout,
+                "Logout navigation cannot be null"
+        );
+
+        if (!confirmNavigationIfDirty()) {
+            return;
+        }
+
+        // Clear the session before the destination initialises its navigation.
+        AccountSession.logout();
+        navigateAfterLogout.run();
+    }
+
+    /**
      * Requests confirmation before navigating away from unsaved changes.
      *
      * @return true when navigation may continue
@@ -279,6 +302,18 @@ public class ProfileController {
         if (confirmNavigationIfDirty()) {
             SceneSwitcher.switchScene(actionEvent, "main-view.fxml");
         }
+    }
+
+
+    /**
+     * Handles the sidebar log out action.
+     * Confirms any unsaved changes, ends the session, then returns to the landing screen.
+     *
+     * @param actionEvent the event raised by the log out button
+     */
+    @FXML
+    private void onLogout(ActionEvent actionEvent) {
+        logout(() -> SceneSwitcher.switchScene(actionEvent, "landing-view.fxml"));
     }
 
     private AccountValidator.ValidationResult validateFields() {

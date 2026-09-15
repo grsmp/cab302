@@ -41,7 +41,11 @@
             <Button disable="true" maxWidth="Infinity" mnemonicParsing="false" text="Security"/>
             <Button disable="true" maxWidth="Infinity" mnemonicParsing="false" text="Reminders"/>
             <Button disable="true" maxWidth="Infinity" mnemonicParsing="false" text="My gardens"/>
-            <Button disable="true" maxWidth="Infinity" mnemonicParsing="false" text="Log out"/>
+            <Button fx:id="logoutButton"
+                    maxWidth="Infinity"
+                    mnemonicParsing="false"
+                    onAction="#onLogout"
+                    text="Log out"/>
         </VBox>
     </left>
 

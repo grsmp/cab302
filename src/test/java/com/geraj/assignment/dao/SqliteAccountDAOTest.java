@@ -9,11 +9,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.sql.PreparedStatement;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class SqliteAccountDAOTest {
     private Connection connection;
@@ -112,6 +116,155 @@ class SqliteAccountDAOTest {
         );
     }
 
+    /**
+     * Verifies that retrieving an existing account preserves its database ID.
+     * The row is inserted directly so the test does not depend on createAccount
+     * assigning generated identifiers, which will be tested separately.
+     *
+     * @throws SQLException if the test row cannot be inserted
+     */
+    @Test
+    void getAccountByIdShouldPreserveStoredIdentifier() throws SQLException {
+        // Use an explicit ID to verify that the DAO reads the stored value.
+        String query = """
+            INSERT INTO accounts
+                (id, name, email, firstName, lastName, phoneNumber, hash)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """;
+
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, 42);
+            statement.setString(2, "harresh");
+            statement.setString(3, "harresh@example.com");
+            statement.setString(4, "Harresh");
+            statement.setString(5, "Patel");
+            statement.setString(6, "0412345678");
+            statement.setString(7, "stored-hash");
+            statement.executeUpdate();
+        }
+
+        Optional<Account> result = accountDAO.getAccountById(42);
+
+        assertTrue(result.isPresent(), "The stored account should be found.");
+        assertEquals(
+                Integer.valueOf(42),
+                result.orElseThrow().getId(),
+                "The retrieved account should retain its database identifier."
+        );
+    }
+
+    /**
+     * Verifies that looking up an account by username preserves its database ID.
+     * Two accounts ensure the lookup returns the requested account's identity.
+     */
+    @Test
+    void getAccountByNameShouldPreserveStoredIdentifier() {
+        accountDAO.createAccount(createAccount(
+                "first", "first@example.com", "First", "User",
+                "", "first-hash"
+        ));
+        accountDAO.createAccount(createAccount(
+                "second", "second@example.com", "Second", "User",
+                "", "second-hash"
+        ));
+
+        Account result = accountDAO.getAccountByName("second");
+
+        // Each test starts with an empty database, so the second row has ID 2.
+        assertEquals(Integer.valueOf(2), result.getId());
+    }
+
+    /**
+     * Verifies that looking up an account by email preserves its database ID.
+     * The requested account must retain its own identity rather than another row's.
+     */
+    @Test
+    void getAccountByEmailShouldPreserveStoredIdentifier() {
+        accountDAO.createAccount(createAccount(
+                "first", "first@example.com", "First", "User",
+                "", "first-hash"
+        ));
+        accountDAO.createAccount(createAccount(
+                "second", "second@example.com", "Second", "User",
+                "", "second-hash"
+        ));
+
+        Account result = accountDAO.getAccountByEmail("second@example.com")
+                .orElseThrow();
+
+        // The fresh database assigns ID 2 to the second inserted account.
+        assertEquals(Integer.valueOf(2), result.getId());
+    }
+
+    /**
+     * Verifies that creating an account assigns its generated database ID
+     * to the original object and that the ID identifies the stored account.
+     */
+    @Test
+    void createAccountShouldAssignGeneratedIdentifierToOriginalAccount() {
+        Account account = createAccount(
+                "harresh", "harresh@example.com", "Harresh", "Patel",
+                "0412345678", "stored-hash"
+        );
+
+        accountDAO.createAccount(account);
+
+        // The caller needs the persisted identity without reloading the account.
+        assertNotNull(
+                account.getId(),
+                "Creating an account should assign its generated database ID."
+        );
+
+        // Check that the assigned identifier refers to the correct stored row.
+        Account storedAccount = accountDAO.getAccountById(account.getId())
+                .orElseThrow();
+
+        assertAll(
+                () -> assertEquals(account.getId(), storedAccount.getId()),
+                () -> assertEquals(account.getName(), storedAccount.getName()),
+                () -> assertEquals(account.getEmail(), storedAccount.getEmail())
+        );
+    }
+
+    /**
+     * Verifies that duplicate email registration reports the conflicting field
+     * without replacing the existing account or storing the rejected account.
+     */
+    @Test
+    void createAccountWithDuplicateEmailShouldReportEmailConflict() {
+        Account existingAccount = createAccount(
+                "original", "shared@example.com", "Original", "User",
+                "", "original-hash"
+        );
+        accountDAO.createAccount(existingAccount);
+
+        // A different username isolates the email uniqueness rule.
+        Account duplicateAccount = createAccount(
+                "another", "shared@example.com", "Another", "User",
+                "", "another-hash"
+        );
+
+        DuplicateAccountException exception = assertThrows(
+                DuplicateAccountException.class,
+                () -> accountDAO.createAccount(duplicateAccount)
+        );
+
+        Account storedAccount = accountDAO
+                .getAccountByEmail("shared@example.com")
+                .orElseThrow();
+
+        assertAll(
+                () -> assertEquals("email", exception.getFieldName()),
+                () -> assertEquals(
+                        existingAccount.getId(), storedAccount.getId()
+                ),
+                () -> assertEquals("original", storedAccount.getName()),
+                () -> assertEquals("original-hash", storedAccount.getHash()),
+                () -> assertNull(accountDAO.getAccountByName("another")),
+                () -> assertNull(duplicateAccount.getId())
+        );
+    }
+
     private Account createAccount(
             String name,
             String email,
@@ -120,6 +273,6 @@ class SqliteAccountDAOTest {
             String phoneNumber,
             String hash
     ) {
-        return new Account(name, email, firstName, lastName, phoneNumber, hash);
+        return new Account(name, email, firstName, lastName, phoneNumber, hash, null);
     }
 }

@@ -10,8 +10,8 @@ import java.io.IOException;
 public class GerajApplication extends Application {
     // Constants defining the window title and size
     public static final String TITLE = "CAB302 GERAJ Application";
-    public static final int WIDTH = 640;
-    public static final int HEIGHT = 360;
+    public static final int WIDTH = 1200;
+    public static final int HEIGHT = 750;
     public static final String LANDING_PAGE = "landing-view.fxml";
 
     @Override
