@@ -8,12 +8,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SqliteGardenDAO implements IGardenDAO {
     private final Connection connection;
+    private final IAccountDAO accountDAO;
 
     public SqliteGardenDAO() {
         connection = SqliteConnection.getInstance();
+        this.accountDAO = new SqliteAccountDAO();
         createTable();
     }
 
@@ -26,8 +29,8 @@ public class SqliteGardenDAO implements IGardenDAO {
                 temperature REAL,
                 precipitation REAL,
                 atmosphericHumidity REAL,
-                owner_name TEXT,
-                FOREIGN KEY (owner_name) REFERENCES accounts(name)
+                owner_id INTEGER,
+                FOREIGN KEY (owner_id) REFERENCES accounts(id)
             );
             """;
 
@@ -41,50 +44,36 @@ public class SqliteGardenDAO implements IGardenDAO {
     @Override
     public void createGarden(Garden garden) {
         String query = """
-            INSERT INTO gardens (name, location, temperature, precipitation, atmosphericHumidity, owner_name)
+            INSERT INTO gardens (name, location, temperature, precipitation, atmosphericHumidity, owner_id)
             VALUES (?, ?, ?, ?, ?, ?)
             """;
 
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, garden.getName());
             statement.setString(2, garden.getLocation());
-
-            if (garden.getTemperature() != null) {
-                statement.setDouble(3, garden.getTemperature());
-            } else {
-                statement.setNull(3, java.sql.Types.DOUBLE);
-            }
-
-            if (garden.getPrecipitation() != null) {
-                statement.setDouble(4, garden.getPrecipitation());
-            } else {
-                statement.setNull(4, java.sql.Types.DOUBLE);
-            }
-
-            if (garden.getAtmosphericHumidity() != null) {
-                statement.setInt(5, garden.getAtmosphericHumidity());
-            } else {
-                statement.setNull(5, java.sql.Types.INTEGER);
-            }
+            statement.setDouble(3, garden.getTemperature());
+            statement.setDouble(4, garden.getPrecipitation());
+            statement.setInt(5, garden.getAtmosphericHumidity());
 
             if (garden.getOwner() != null) {
-                statement.setString(6, garden.getOwner().getName());
+                statement.setInt(6, garden.getOwner().getId());
             } else {
-                statement.setNull(6, java.sql.Types.VARCHAR);
+                statement.setNull(6, java.sql.Types.INTEGER);
             }
 
             statement.executeUpdate();
 
-//            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-//                if (generatedKeys.next()) {
-//                    garden.setId(generatedKeys.getInt(1));
-//                }
-//            }
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    garden.setId(generatedKeys.getInt(1));
+                }
+            }
         } catch (Exception e) {
             throw new IllegalStateException("Could not save garden.", e);
         }
     }
 
+    @Override
     public ArrayList<Garden> findGardens(String searchName, String searchLocation) {
         ArrayList<Garden> gardens = new ArrayList<>();
 
@@ -116,25 +105,21 @@ public class SqliteGardenDAO implements IGardenDAO {
                 while (resultSet.next()) {
                     String name = resultSet.getString("name");
                     String location = resultSet.getString("location");
+                    double temperature = resultSet.getDouble("temperature");
+                    double precipitation = resultSet.getDouble("precipitation");
+                    int atmosphericHumidity = resultSet.getInt("atmosphericHumidity");
 
-                    Double temperature = resultSet.getDouble("temperature");
-                    if (resultSet.wasNull()) temperature = null;
-
-                    Double precipitation = resultSet.getDouble("precipitation");
-                    if (resultSet.wasNull()) precipitation = null;
-
-                    Integer atmosphericHumidity = resultSet.getInt("atmosphericHumidity");
-                    if (resultSet.wasNull()) atmosphericHumidity = null;
-
-                    String ownerName = resultSet.getString("owner_name");
+                    int ownerId = resultSet.getInt("owner_id");
                     Account owner = null;
-                    if (ownerName != null) {
-                        IAccountDAO accountDAO = new SqliteAccountDAO();
-                        owner = accountDAO.getAccountByName(ownerName);
+
+                    if (!resultSet.wasNull()) {
+                        owner = accountDAO.getAccountById(ownerId).orElse(null);
                     }
 
-                    Garden garden = new Garden(name, location, temperature, precipitation, atmosphericHumidity, owner);
-                    gardens.add(garden);
+                    if (owner != null) {
+                        Garden garden = new Garden(name, location, temperature, precipitation, atmosphericHumidity, owner);
+                        gardens.add(garden);
+                    }
                 }
             }
         } catch (Exception e) {

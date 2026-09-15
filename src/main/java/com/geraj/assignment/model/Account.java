@@ -34,8 +34,7 @@ public class Account {
             String firstName,
             String lastName,
             String phoneNumber,
-            String hash,
-            Garden garden
+            String hash
     ) {
         this.name = Objects.requireNonNull(
                 name,
@@ -66,8 +65,6 @@ public class Account {
                 hash,
                 "Account password hash cannot be null"
         );
-
-        this.garden = garden;
     }
 
     /**

@@ -1,19 +1,22 @@
 package com.geraj.assignment.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 /**
  * A simple model class representing a garden with a name, location, temperature, precipitation, atmospheric humidity, owner and garden plots.
  */
 public class Garden {
+    private Integer id;
     private String name;
     private String location;
-    private Double temperature;
-    private Double precipitation;
-    private Integer atmosphericHumidity;
+    private double temperature;
+    private double precipitation;
+    private int atmosphericHumidity;
     private Account owner;
-    private ArrayList<GardenPlot> gardenPlots;
+    private final List<GardenPlot> gardenPlots;
 
     /**
      * Constructs a new garden with the specified name, location, temperature, precipitation, atmospheric humidity and owner.
@@ -26,17 +29,25 @@ public class Garden {
      */
     public Garden(String name,
                   String location,
-                  Double temperature,
-                  Double precipitation,
-                  Integer atmosphericHumidity,
+                  double temperature,
+                  double precipitation,
+                  int atmosphericHumidity,
                   Account owner) {
         this.name = Objects.requireNonNull(name, "Garden name cannot be null");
         this.location = Objects.requireNonNull(location, "Garden location cannot be null");
         this.temperature = temperature;
         this.precipitation = precipitation;
         this.atmosphericHumidity = atmosphericHumidity;
-        this.owner = owner;
+        this.owner = Objects.requireNonNull(owner, "Garden owner cannot be null");
         this.gardenPlots = new ArrayList<>();
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -52,7 +63,7 @@ public class Garden {
      * @param name the new name of the garden
      */
     public void setName(String name) {
-        this.name = name;
+        this.name = Objects.requireNonNull(name, "Garden name cannot be null");
     }
 
     /**
@@ -68,14 +79,14 @@ public class Garden {
      * @param location the new location of the garden
      */
     public void setLocation(String location) {
-        this.location = location;
+        this.location = Objects.requireNonNull(location, "Garden location cannot be null");
     }
 
     /**
      * Gets the temperature of the garden.
      * @return the temperature
      */
-    public Double getTemperature() {
+    public double getTemperature() {
         return temperature;
     }
 
@@ -91,7 +102,7 @@ public class Garden {
      * Gets the precipitation of the garden.
      * @return the precipitation
      */
-    public Double getPrecipitation() {
+    public double getPrecipitation() {
         return precipitation;
     }
 
@@ -107,7 +118,7 @@ public class Garden {
      * Gets the atmospheric humidity of the garden.
      * @return the atmospheric humidity
      */
-    public Integer getAtmosphericHumidity() {
+    public int getAtmosphericHumidity() {
         return atmosphericHumidity;
     }
 
@@ -132,15 +143,15 @@ public class Garden {
      * @param owner the new owner of the garden
      */
     public void setOwner(Account owner) {
-        this.owner = owner;
+        this.owner = Objects.requireNonNull(owner, "Garden owner cannot be null");
     }
 
     /**
      * Gets the list of garden plots of the garden.
      * @return the list of garden plots
      */
-    public ArrayList<GardenPlot> getGardenPlots() {
-        return gardenPlots;
+    public List<GardenPlot> getGardenPlots() {
+        return Collections.unmodifiableList(gardenPlots);
     }
 
     /**
@@ -148,7 +159,7 @@ public class Garden {
      * @param gardenPlot the garden plot to add
      */
     public void addGardenPlot(GardenPlot gardenPlot) {
-        this.gardenPlots.add(gardenPlot);
+        this.gardenPlots.add(Objects.requireNonNull(gardenPlot, "Garden plot cannot be null"));
     }
 
     /**
@@ -176,10 +187,10 @@ public class Garden {
         return String.format("Garden: %s located in %s.\nConditions:\n\t- Temp: %s\n\t- Precip: %s\n\t- Humidity: %s\n\t- Owner: %s\n\t- Total Plots: %d",
                 name,
                 location,
-                temperature != null ? temperature + "°" : "N/A",
-                precipitation != null ? precipitation + "mm" : "N/A",
-                atmosphericHumidity != null ? atmosphericHumidity + "%" : "N/A",
+                temperature + "°",
+                precipitation + "mm",
+                atmosphericHumidity + "%",
                 owner != null ? owner.getName() : "Unknown",
-                gardenPlots != null ? gardenPlots.size() : 0);
+                gardenPlots.size());
     }
 }
