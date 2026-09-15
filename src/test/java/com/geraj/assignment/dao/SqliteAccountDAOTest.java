@@ -16,6 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class SqliteAccountDAOTest {
     private Connection connection;
@@ -221,6 +223,45 @@ class SqliteAccountDAOTest {
                 () -> assertEquals(account.getId(), storedAccount.getId()),
                 () -> assertEquals(account.getName(), storedAccount.getName()),
                 () -> assertEquals(account.getEmail(), storedAccount.getEmail())
+        );
+    }
+
+    /**
+     * Verifies that duplicate email registration reports the conflicting field
+     * without replacing the existing account or storing the rejected account.
+     */
+    @Test
+    void createAccountWithDuplicateEmailShouldReportEmailConflict() {
+        Account existingAccount = createAccount(
+                "original", "shared@example.com", "Original", "User",
+                "", "original-hash"
+        );
+        accountDAO.createAccount(existingAccount);
+
+        // A different username isolates the email uniqueness rule.
+        Account duplicateAccount = createAccount(
+                "another", "shared@example.com", "Another", "User",
+                "", "another-hash"
+        );
+
+        DuplicateAccountException exception = assertThrows(
+                DuplicateAccountException.class,
+                () -> accountDAO.createAccount(duplicateAccount)
+        );
+
+        Account storedAccount = accountDAO
+                .getAccountByEmail("shared@example.com")
+                .orElseThrow();
+
+        assertAll(
+                () -> assertEquals("email", exception.getFieldName()),
+                () -> assertEquals(
+                        existingAccount.getId(), storedAccount.getId()
+                ),
+                () -> assertEquals("original", storedAccount.getName()),
+                () -> assertEquals("original-hash", storedAccount.getHash()),
+                () -> assertNull(accountDAO.getAccountByName("another")),
+                () -> assertNull(duplicateAccount.getId())
         );
     }
 
