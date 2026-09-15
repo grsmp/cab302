@@ -5,13 +5,25 @@
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.geraj.assignment.controller.GardenContoller">
+            fx:controller="com.geraj.assignment.controller.GardenController">
     <top>
         <fx:include source="nav-bar.fxml"/>
     </top>
 
     <center>
-        <Label text="empty for the moment"/>
+        <VBox spacing="20"
+              alignment="TOP_CENTER"
+              style="-fx-padding: 20;">
+
+            <Label fx:id="gardenNameLabel"
+                   style="-fx-font-size: 28px; -fx-font-weight: bold;"/>
+
+            <FlowPane fx:id="gardenContainer"
+                      hgap="15"
+                      vgap="15"
+                      prefWrapLength="800"/>
+
+        </VBox>
     </center>
 
 </BorderPane>

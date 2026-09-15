@@ -232,6 +232,6 @@ class SqliteAccountDAOTest {
             String phoneNumber,
             String hash
     ) {
-        return new Account(name, email, firstName, lastName, phoneNumber, hash);
+        return new Account(name, email, firstName, lastName, phoneNumber, hash, null);
     }
 }

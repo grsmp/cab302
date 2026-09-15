@@ -226,7 +226,8 @@ public class SqliteAccountDAO implements IAccountDAO {
                 resultSet.getString("firstName"),
                 resultSet.getString("lastName"),
                 resultSet.getString("phoneNumber"),
-                resultSet.getString("hash")
+                resultSet.getString("hash"),
+                null
         );
 
         // Restore the existing database identity without changing the constructor.

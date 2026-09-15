@@ -24,7 +24,7 @@ public class ProfileControllerTest {
         AccountSession.logout();
         account = new Account(
                 "harresh", "harresh@example.com", "Harresh",
-                "Patel", "0412345678", "stored-hash"
+                "Patel", "0412345678", "stored-hash", null
         );
         AccountSession.startSession(account);
     }

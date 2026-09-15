@@ -4,6 +4,7 @@ module com.example.assignment {
     requires java.sql;
     requires de.mkammerer.argon2.nolibs;
     requires java.net.http;
+    requires org.junit.jupiter.api;
 
 
     opens com.geraj.assignment to javafx.fxml;

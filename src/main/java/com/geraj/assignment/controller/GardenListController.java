@@ -1,5 +1,6 @@
 package com.geraj.assignment.controller;
 
+import com.geraj.assignment.AccountSession;
 import com.geraj.assignment.SceneSwitcher;
 import com.geraj.assignment.dao.IAccountDAO;
 import com.geraj.assignment.dao.IGardenDAO;
@@ -54,11 +55,13 @@ public class GardenListController {
     @FXML
     private void onClickGarden(ActionEvent actionEvent) {
         Garden selectedGarden = gardenListView.getSelectionModel().getSelectedItem();
+        AccountSession instance = AccountSession.getInstance();
+        Account user_account = instance.getAccount();
 
         if (selectedGarden != null) {
             GardenInfoContoller controller = SceneSwitcher.switchScene(actionEvent, "garden-info-view.fxml");
             if (controller != null) {
-                controller.setInfo(selectedGarden);
+                controller.setInfo(selectedGarden, user_account);
             }
         }
     }
