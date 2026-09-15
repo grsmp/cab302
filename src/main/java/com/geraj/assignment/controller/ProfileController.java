@@ -303,6 +303,18 @@ public class ProfileController {
         }
     }
 
+
+    /**
+     * Handles the sidebar log out action.
+     * Confirms any unsaved changes, ends the session, then returns to the landing screen.
+     *
+     * @param actionEvent the event raised by the log out button
+     */
+    @FXML
+    private void onLogout(ActionEvent actionEvent) {
+        logout(() -> SceneSwitcher.switchScene(actionEvent, "landing-view.fxml"));
+    }
+
     private AccountValidator.ValidationResult validateFields() {
         return AccountValidator.validatePersonalInformation(
                 firstNameTextField.getText(),
