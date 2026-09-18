@@ -53,6 +53,7 @@ public class CreateGardenController {
      * @throws IllegalArgumentException if required details are missing
      * @throws IllegalStateException if persistence fails
      */
+
     public Garden createGarden(
             String name,
             String location,
@@ -62,17 +63,12 @@ public class CreateGardenController {
             throw new IllegalArgumentException("Please sign in first.");
         }
 
-        if (name == null || name.isBlank()) {
-            throw new IllegalArgumentException("Enter a garden name.");
-        }
-
-        if (location == null || location.isBlank()) {
-            throw new IllegalArgumentException("Enter a location.");
-        }
+        String cleanName = requireText(name, "Enter a garden name.");
+        String cleanLocation = requireText(location, "Enter a location.");
 
         Garden garden = new Garden(
-                name.strip(),
-                location.strip(),
+                cleanName,
+                cleanLocation,
                 null,
                 null,
                 null,
@@ -81,6 +77,17 @@ public class CreateGardenController {
 
         gardenDAO.createGarden(garden);
         return garden;
+    }
+
+    /**
+     * Requires nonblank text and removes surrounding whitespace.
+     */
+    private String requireText(String value, String errorMessage) {
+        if (value == null || value.isBlank()) {
+            throw new IllegalArgumentException(errorMessage);
+        }
+
+        return value.strip();
     }
 
     @FXML
