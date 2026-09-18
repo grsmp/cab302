@@ -1,5 +1,9 @@
 package com.geraj.assignment.controller;
 
+import com.geraj.assignment.dao.IGardenDAO;
+import com.geraj.assignment.model.Account;
+
+import java.util.Objects;
 import com.geraj.assignment.AccountSession;
 import com.geraj.assignment.SceneSwitcher;
 import com.geraj.assignment.dao.SqliteGardenDAO;
@@ -10,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+
 
 public class CreateGardenController {
 
@@ -77,5 +82,30 @@ public class CreateGardenController {
     @FXML
     private void onViewGardens(ActionEvent event) {
         SceneSwitcher.switchScene(event, "garden-list-view.fxml");
+    }
+
+    private final IGardenDAO gardenDAO;
+
+    /**
+     * Used by FXMLLoader when opening the screen.
+     */
+    public CreateGardenController() {
+        this(new SqliteGardenDAO());
+    }
+
+    /**
+     * Allows tests to provide a fake DAO.
+     */
+    public CreateGardenController(IGardenDAO gardenDAO) {
+        this.gardenDAO = Objects.requireNonNull(gardenDAO);
+    }
+
+    /**
+     * Temporary implementation for the Red stage.
+     */
+    public Garden createGarden(String name, String location, Account owner) {
+        throw new UnsupportedOperationException(
+                "Garden creation behaviour has not been implemented yet."
+        );
     }
 }
